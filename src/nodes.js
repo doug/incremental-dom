@@ -60,6 +60,7 @@ var createElement = function(doc, parent, tag, key, statics) {
     for (var i = 0; i < statics.length; i += 2) {
       if (statics[i] == 'is') {
         extend = statics[i + 1];
+        break;
       }
     }
   }
