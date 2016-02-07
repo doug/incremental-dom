@@ -55,10 +55,28 @@ var createElement = function(doc, parent, tag, key, statics) {
   var namespace = getNamespaceForTag(tag, parent);
   var el;
 
-  if (namespace) {
-    el = doc.createElementNS(namespace, tag);
+  var extend;
+  if (statics) {
+    for (var i = 0; i < statics.length; i += 2) {
+      if (statics[i] == 'is') {
+        extend = statics[i + 1];
+        break;
+      }
+    }
+  }
+
+  if (extend) {
+    if (namespace) {
+      el = doc.createElementNS(namespace, tag, extend);
+    } else {
+      el = doc.createElement(tag, extend);
+    }
   } else {
-    el = doc.createElement(tag);
+    if (namespace) {
+      el = doc.createElementNS(namespace, tag);
+    } else {
+      el = doc.createElement(tag);
+    }
   }
 
   initData(el, tag, key);
